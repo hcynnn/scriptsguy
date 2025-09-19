@@ -1,12 +1,19 @@
 # scriptsguy
+
 混合使用node和python两种脚本语言，实现意想不到、不好解决的的东西
 
 怎么使用？
+
 只需要更改main.txt文件就可以了
+
 `<py></py>`夹起来的就是python代码，
+
 `<node></node>`夹起来的就是nodejs代码
+
 还提供了sguyms.py和sguyms.js模块供使用
+
 例：
+
 `
 <py>
 
