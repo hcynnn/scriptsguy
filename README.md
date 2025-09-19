@@ -4,6 +4,8 @@
 
 怎么使用？
 
+运行scriptsguy.py文件来运行
+
 只需要更改main.txt文件就可以了
 
 `<py></py>`夹起来的就是python代码，
@@ -97,3 +99,7 @@ console.log(returnValue) //输出 0
 
 </node>
 `
+
+下载后main.txt不是空的，有一个示例，运行scriptsguy.py文件时，会有这样的一个效果：
+
+访问控制台输出的localhost端口时，会出现一个黄色的圆在屏幕上，是不是很神奇？
