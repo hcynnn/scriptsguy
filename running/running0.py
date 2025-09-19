@@ -1,0 +1,30 @@
+import tkinter as tk
+
+def create_transparent_red_circle_window():
+    root = tk.Tk()
+
+    root.overrideredirect(True)
+
+    window_width = 300
+    window_height = 300
+    root.geometry(f"{window_width}x{window_height}")
+
+    root.attributes('-transparentcolor', 'white')
+
+    canvas = tk.Canvas(root, width=window_width, height=window_height, bg='white', highlightthickness=0)
+    canvas.pack()
+
+    center_x = window_width // 2
+    center_y = window_height // 2
+    circle_radius = 50
+
+    x0 = center_x - circle_radius
+    y0 = center_y - circle_radius
+    x1 = center_x + circle_radius
+    y1 = center_y + circle_radius
+
+    red_circle = canvas.create_oval(x0, y0, x1, y1, fill="yellow", outline="")
+
+    root.after(3000, root.destroy)
+
+    root.mainloop()
