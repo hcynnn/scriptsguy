@@ -1,7 +1,7 @@
 const { exec } = require('child_process');
 const fs = require('fs');
 
-let variables = {}
+let variables = {};
 
 class Variable{
     constructor(name, value) {
@@ -64,7 +64,7 @@ function load(){
     try {
       const data = fs.readFileSync('./running/variables.json', 'utf8');
       try {
-          const variables = JSON.parse(data);
+          variables = JSON.parse(data);
       } catch (error) {
           console.error(error.message);
       }
@@ -87,5 +87,6 @@ module.exports = {
     save,
     get,
     call_node,
-    Variable
+    Variable,
+    variables
 }
