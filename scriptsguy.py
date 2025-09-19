@@ -40,17 +40,8 @@ def process_file(lines):
         if i == '<node>\n':
             isnode = True
 
-def delete_running(directory_path):
-    for root, dirs, files in os.walk(directory_path):
-        for file in files:
-            file_path = os.path.join(root, file)
-            try:
-                os.remove(file_path)
-            except Exception as e:
-                print(e)
 
 if __name__ == '__main__':
     with open(ifpath, "r", encoding='utf-8') as f:
         text = f.readlines()
         process_file(text)
-        delete_running('./running')
