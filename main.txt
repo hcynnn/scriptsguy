@@ -1,89 +1,50 @@
 <py>
 import tkinter as tk
 
-def transparent_circle_window():
-    """
-    创建一个透明窗口，中间显示红色填充圆圈，5秒后自动关闭。
-    """
-    # 创建主窗口
+def create_transparent_red_circle_window():
     root = tk.Tk()
-    root.title("透明红圈")  # 设置窗口标题
-    root.geometry("400x300")  # 设置窗口大小
-    root.overrideredirect(True)  # 移除窗口边框和标题栏[1,2](@ref)
 
-    # 设置窗口透明度：0.8表示80%不透明（20%透明）[1,4,5](@ref)
-    root.attributes('-alpha', 0.8)
+    root.overrideredirect(True)
 
-    # 设置特定颜色透明（这里是白色），使背景透明[1,2,3](@ref)
+    window_width = 300
+    window_height = 300
+    root.geometry(f"{window_width}x{window_height}")
+
     root.attributes('-transparentcolor', 'white')
-    root.configure(bg='white')  # 将窗口背景色设置为透明色
 
-    # 创建画布用于绘制圆形[7,8](@ref)
-    canvas = tk.Canvas(root, width=400, height=300, bg='white', highlightthickness=0)
+    canvas = tk.Canvas(root, width=window_width, height=window_height, bg='white', highlightthickness=0)
     canvas.pack()
 
-    # 计算圆形位置（居中）[6](@ref)
-    center_x, center_y = 200, 150  # 窗口中心坐标
-    radius = 50  # 圆形半径
+    center_x = window_width // 2
+    center_y = window_height // 2
+    circle_radius = 50
 
-    # 绘制填充红色的圆形[6,7](@ref)
-    # create_oval方法的参数：左上角x, 左上角y, 右下角x, 右下角y[6](@ref)
-    circle = canvas.create_oval(
-        center_x - radius,  # 左上角x坐标
-        center_y - radius,  # 左上角y坐标
-        center_x + radius,  # 右下角x坐标
-        center_y + radius,  # 右下角y坐标
-        fill='red',         # 填充红色
-        outline=''          # 无边框
-    )
+    x0 = center_x - circle_radius
+    y0 = center_y - circle_radius
+    x1 = center_x + circle_radius
+    y1 = center_y + circle_radius
 
-    # 设置5秒后自动关闭窗口
-    root.after(5000, root.destroy)  # 5000毫秒 = 5秒
+    red_circle = canvas.create_oval(x0, y0, x1, y1, fill="yellow", outline="")
 
-    # 进入主事件循环
+    root.after(3000, root.destroy)
+
     root.mainloop()
 </py>
 
 <node>
-const sgms = require('../sguyms.js');
-// 引入 express 模块
 const express = require('express');
-// 创建 Express 应用实例
+const sgms = require('../sguyms.js');
+
 const app = express();
-// 定义端口号，如果环境变量有端口则使用，否则默认为 3000
-const PORT = process.env.PORT || 3000;
 
-// 使用中间件解析 JSON 和 URL 编码的请求体[2](@ref)
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+const PORT = 3003;
 
-// 监听根路径的 GET 请求[2,8](@ref)
 app.get('/', (req, res) => {
-    sgms.call_py(0, 'transparent_circle_window')
-    res.send('Hello, World!'); // 发送文本响应
+  sgms.call_py(0, 'create_transparent_red_circle_window')
+  res.send('hi, scripts-guy!');
 });
 
-// 监听带有路由参数的 GET 请求示例[3](@ref)
-app.get('/users/:id', (req, res) => {
-    // 从路由参数中获取 id[3](@ref)
-    const userId = req.params.id;
-    res.send(`用户 ID 是: ${userId}`);
-});
-
-// 监听带有查询参数的 GET 请求示例[1](@ref)
-app.get('/search', (req, res) => {
-    // 从查询字符串中获取参数[1](@ref)
-    const query = req.query.q;
-    const page = req.query.page || 1; // 默认值为第1页
-    res.json({ // 返回 JSON 响应[3](@ref)
-        message: '搜索请求已接收',
-        searchQuery: query,
-        currentPage: page
-    });
-});
-
-// 启动服务器，监听指定端口[2,8](@ref)
 app.listen(PORT, () => {
-    console.log(`服务器正在运行在 http://localhost:${PORT}`);
+  console.log(`http://localhost:${PORT}`);
 });
 </node>
