@@ -14,16 +14,20 @@ class Variable:
 def get(variable):
 	return variables[variable]
 
-def call_py(script_id, func_name, args = ''):
+def call_py(script_id, func_name, cmd_start = False, args = ''):
 	with open(f'./running/call.py', 'w') as f:
 		f.write(f'from running{script_id} import *\n')
 		f.write(f'{func_name}({args})')
+	if cmd_start:
+		os.system('start python ./running/call.py')
 	os.system('python ./running/call.py')
 
-def call_node(script_id, func_name, args = ''):
+def call_node(script_id, func_name, cmd_start = False, args = ''):
 	with open(f'./running/call.js', 'w') as f:
 		f.write(f'let sgms = require("./running{script_id}.js");\n')
 		f.write(f'sgms.{func_name}({args});')
+	if cmd_start:
+		os.system('start node ./running/call.js')
 	os.system('node ./running/call.js')
 
 def load():
