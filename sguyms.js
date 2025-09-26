@@ -18,11 +18,26 @@ function get(variable) {
     return variables[variable]
 }
 
-function call_py(script_id, func_name, args = ''){
+function call_py(script_id, func_name, cmd_start = false, args = ''){
     fs.writeFile('./running/call.py', `from running${script_id} import *\n${func_name}(${args})`, 'utf8', (writeErr) => {
         if (writeErr) {
             console.error(writeErr);
             return;
+        }
+
+        if (cmd_start == true){
+            exec('start python ./running/call.py', (execError, stdout, stderr) => {
+                if (execError) {
+                    console.error(execError);
+                    return;
+                }
+                if (stderr) {
+                    console.error(stderr);
+                    return;
+                }
+                console.log(stdout);
+            });
+            return
         }
 
         exec('python ./running/call.py', (execError, stdout, stderr) => {
@@ -39,11 +54,26 @@ function call_py(script_id, func_name, args = ''){
     });
 }
 
-function call_node(script_id, func_name, args = ''){
+function call_node(script_id, func_name, cmd_start = false, args = ''){
     fs.writeFile('./running/call.js', `let sgms = require("./running${script_id}.js");\nsgms.${func_name}(${args});`, 'utf8', (writeErr) => {
         if (writeErr) {
             console.error(writeErr);
             return;
+        }
+
+        if (cmd_start == true){
+            exec('start node ./running/call.js', (execError, stdout, stderr) => {
+                if (execError) {
+                    console.error(execError);
+                    return;
+                }
+                if (stderr) {
+                    console.error(stderr);
+                    return;
+                }
+                console.log(stdout);
+            });
+            return
         }
 
         exec('node ./running/call.js', (execError, stdout, stderr) => {
